@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>To-Do List</title>
+    <style>
+    body {
+      font-family: Arial;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #fff;
+      margin: 5px 0;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 5px;
+    }
+    .btn-group button {
+      margin-left: 5px;
+      padding: 5px 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .edit-btn {
+      background: #ffc107;
+      border: none;
+      color: #000;
+    }
+    .delete-btn {
+      background: red;
+      color: white;
+      border: none;
+    }
+    .save-btn {
+      background: green;
+      color: white;
+      border: none;
+    }
+
+    /*.dark-mode {
+      background-color: black;
+      color: white;
+    }*/
+  </style>
+</head>
+<body>
+  <!-- <button id="toggleBtn">Toggle Dark Mode</button> -->
+	<h1>My To-Do List</h1>
+	<input type="text" id="taskInput" placeholder="Enter a Task">
+	<button onclick="addTask()">Add Task</button>
+
+	<ul id="taskList"></ul>
+	<script>
+          // Function to add a new task
+          function addTask() {
+            // Get the input element and its value
+            const input = document.getElementById("taskInput");
+            const taskText = input.value.trim();
+
+            // Prevent adding empty tasks
+            if (taskText === "") {
+              alert("Please enter a task!");
+              return;
+            }
+
+            // Create a new <li> element (a new task)
+            const li = document.createElement("li");
+
+            // Create a <span> to hold the task text
+            const span = document.createElement("span");
+            span.textContent = taskText;
+
+            // Create a container for buttons (edit & delete)
+            const btnGroup = document.createElement("div");
+            btnGroup.className = "btn-group";
+
+            // Create the "Edit" button
+            const editBtn = document.createElement("button");
+            editBtn.textContent = "Edit";
+            editBtn.className = "edit-btn";
+
+            // When "Edit" is clicked, call editTask function
+            editBtn.onclick = () => editTask(span, editBtn);
+
+            // Create the "Delete" button
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete";
+            deleteBtn.className = "delete-btn";
+
+            // When "Delete" is clicked, remove the entire task
+            deleteBtn.onclick = () => li.remove();
+
+            // Append both buttons to the button group
+            btnGroup.appendChild(editBtn);
+            btnGroup.appendChild(deleteBtn);
+
+            // Add the text and button group to the list item
+            li.appendChild(span);
+            li.appendChild(btnGroup);
+
+            // Add the new task to the <ul> element
+            document.getElementById("taskList").appendChild(li);
+
+            // Clear the input field after adding task
+            input.value = "";
+          }
+
+          // Function to edit an existing task
+          function editTask(span, editBtn) {
+            // Get the current task text
+            const currentText = span.textContent;
+
+            // Create an input field with the existing text
+            const input = document.createElement("input");
+            input.type = "text";
+            input.value = currentText;
+            input.style.flex = "1"; // Makes input stretch to fill space
+
+            // Replace the <span> with the input field in the list item
+            const li = span.parentElement;
+            li.replaceChild(input, span);
+
+            // Change "Edit" button to "Save"
+            editBtn.textContent = "Save";
+            editBtn.className = "save-btn";
+
+            // When "Save" is clicked, call saveTask
+            editBtn.onclick = () => saveTask(input, editBtn);
+          }
+
+          // Function to save the edited task
+          function saveTask(input, saveBtn) {
+            // Get the new text from the input field
+            const newText = input.value.trim();
+
+            // Prevent saving empty task
+            if (newText === "") {
+              alert("Task cannot be empty!");
+              return;
+            }
+
+            // Create a new <span> to hold updated task text
+            const span = document.createElement("span");
+            span.textContent = newText;
+
+            // Replace the input field with the updated <span>
+            const li = input.parentElement;
+            li.replaceChild(span, input);
+
+            // Change "Save" button back to "Edit"
+            saveBtn.textContent = "Edit";
+            saveBtn.className = "edit-btn";
+
+            // Reconnect the "Edit" functionality
+            saveBtn.onclick = () => editTask(span, saveBtn);
+          }
+
+
+    // document.getElementById("toggleBtn").addEventListener("click", function(){
+    //   document.body.classList.toggle("dark-mode");
+    // });
+
+	</script>
+
+</body>
+</html>
