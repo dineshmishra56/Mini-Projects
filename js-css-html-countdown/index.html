@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>JS CSS HTML Countdown Timre</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background: radial-gradient(
+				circle,
+				rgb(30,171,148) 0%,
+				rgb(91,91,125) 40%,
+				rgb(0,0,0) 100%
+			);
+			height: 100vh;
+			widows: 100vw;
+			color: rgb(255, 255, 255);
+			font-family: 'Trebuchet MS', Arial, sans-serif;
+			text-align: center;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.custom-slider {
+			width: 223px;
+			height: 20px;
+			background-color: rgba(255, 255, 255, 0.5);
+		}
+
+		.fill {
+			height: 20px;
+			background-color: rgb(125, 249, 208);
+			width: 100%;
+		}
+
+		h1 {
+			font-size: 100px;
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h1 id="time-left">60</h1>
+		<h3>COUNTDOWN IN SECONDS</h3>
+		<!-- <input type="range" id="slider" value="5" min="0" max="5"/> -->
+		<div class="custom-slider">
+			<div class="fill"></div>
+		</div>
+	</div>
+<script>
+	const sliderFill = document.querySelector('.fill')
+	const timeLeftText = document.querySelector('#time-left')
+	const startCount = 60
+	let timeLeft = startCount
+
+const timerId = setInterval(() => {
+	// console.log(timeLeft)
+	timeLeft--
+	timeLeftText.textContent = timeLeft
+	sliderFill.style.width = (timeLeft / startCount) * 100 + '%'
+	// console.log(slider.value, 'before')
+	// slider.value = timeLeft
+	// console.log(slider.value, 'after')
+	if (timeLeft <=0) {
+		clearInterval(timerId)
+		timeLeftText.textContent = 'FIN!'
+	}
+}, 1000)
+</script>
+</body>
+</html>
