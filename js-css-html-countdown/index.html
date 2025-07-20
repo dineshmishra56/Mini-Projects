@@ -40,11 +40,19 @@
 			font-size: 100px;
 			margin: 0;
 		}
+
+		.circle {
+			width: 10px;
+			height: 10px;
+			border-radius: 5px;
+/*			background-color: red;*/
+			position: absolute;
+		}
 	</style>
 </head>
 <body>
 	<div>
-		<h1 id="time-left">60</h1>
+		<h1 id="time-left">5</h1>
 		<h3>COUNTDOWN IN SECONDS</h3>
 		<!-- <input type="range" id="slider" value="5" min="0" max="5"/> -->
 		<div class="custom-slider">
@@ -54,7 +62,7 @@
 <script>
 	const sliderFill = document.querySelector('.fill')
 	const timeLeftText = document.querySelector('#time-left')
-	const startCount = 60
+	const startCount = 5
 	let timeLeft = startCount
 
 const timerId = setInterval(() => {
@@ -68,8 +76,32 @@ const timerId = setInterval(() => {
 	if (timeLeft <=0) {
 		clearInterval(timerId)
 		timeLeftText.textContent = 'FIN!'
+		surprise()
 	}
 }, 1000)
+
+
+function surprise() {
+	const colors = [
+		'rgba(255, 105, 97, 0.5)',
+		'rgba(97, 168, 255, 0.5)',
+		'rgba(247, 255, 97, 0.5)',
+		'rgba(97, 255, 184, 0.5)',
+		'rgba(255, 255, 255, 0.5)'
+	]
+
+	for (let i = 0; i < 500; i++) {
+		setTimeout(() => {
+			console.log('boo')
+			const circleElement = document.createElement('div')
+			circleElement.classList.add('circle')
+			circleElement.style.left = Math.floor(Math.random() * 100) + '%'
+			circleElement.style.top = Math.floor(Math.random() * 100) + '%'
+			circleElement.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]
+			timeLeftText.append(circleElement)
+		}, i * 5)
+	}
+}
 </script>
 </body>
 </html>
